@@ -3,21 +3,22 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
+    "server": "nodemon ./start.js",
     "dev": "nuxt",
     "build": "nuxt build",
     "start": "nuxt start",
     "generate": "nuxt generate"
   },
   "dependencies": {
-    "core-js": "^3.6.5",
+    "core-js": "^3.8.2",
     "koa": "^2.13.1",
     "mongoose": "^5.11.11",
     "nuxt": "^2.14.6",
-    "ramda": "^0.27.1"
+    "ramda": "^0.27.1",
+    "regenerator-runtime": "^0.13.7"
   },
   "devDependencies": {
     "@babel/core": "^7.12.10",
-    "@babel/polyfill": "^7.12.1",
     "@babel/preset-env": "^7.12.11",
     "@babel/register": "^7.12.10",
     "nodemon": "^2.0.7"
