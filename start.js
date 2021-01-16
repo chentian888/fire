@@ -1,5 +1,5 @@
 require('@babel/register')
-require('core-js/stable')
-require('regenerator-runtime/runtime')
+require('core-js')
+require('regenerator-runtime')
 
 require('./server/index')

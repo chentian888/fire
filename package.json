@@ -10,8 +10,12 @@
     "generate": "nuxt generate"
   },
   "dependencies": {
-    "core-js": "^3.8.2",
+    "@koa/router": "^10.0.0",
+    "core-js": "2",
     "koa": "^2.13.1",
+    "koa-bodyparser": "^4.3.0",
+    "koa-session": "^6.1.0",
+    "lodash": "^4.17.20",
     "mongoose": "^5.11.11",
     "nuxt": "^2.14.6",
     "ramda": "^0.27.1",

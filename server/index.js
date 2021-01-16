@@ -1,15 +1,18 @@
+import { resolve } from 'path'
 import Koa from 'koa'
 import { Nuxt, Builder } from 'nuxt'
-// const { Nuxt, Builder } = require('nuxt')
+import R from 'ramda'
 import nuxtConfig from '../nuxt.config'
-// const nuxtConfig = require('../nuxt.config')
+import { from } from 'core-js/fn/array'
 
+const r = path => resolve(__dirname, path)
 const HOST = process.env.HOST || 'localhost'
 const PORT = 3000
-const MIDDLEWARES = []
+const MIDDLEWARES = ['database','common']
 class Server {
   constructor() {
     this.app = new Koa()
+    this.useMiddleware(this.app)(MIDDLEWARES)
     this.dev = !(process.env.NODE_ENV === 'production')
   }
 
@@ -25,18 +28,45 @@ class Server {
       ctx.body = '<h1>hello wordl!!</h1>'
     })
     if (this.dev) {
-      const builder = new Builder(nuxt)
-      await builder.build()
+      try {
+        const builder = new Builder(nuxt)
+        await builder.build()
+      } catch (e) {
+        console.error(e)
+        process.exit(1)
+      }
     } else {
       await nuxt.ready()
     }
     this.app.use(async (ctx, next) => {
       await next()
+      ctx.status = 200
+      ctx.req.session = ctx.session
+      return new Promise((resolve, reject) => {
+        ctx.res.on('close', resolve)
+        ctx.res.on('finish', resolve)
+        nuxt.render(ctx.req, ctx.res, promise => {
+          promise.then(resolve).catch(reject)
+        })
+      })
       console.log('我最先被打印出来')
     })
     this.app.listen(PORT, HOST, () => {
       console.log(`server is running at http://${HOST}:${PORT}`)
     })
+  }
+
+  useMiddleware(app) {
+    return R.map(
+      R.compose(
+        R.map(i => i(app)),
+        require,
+        i => {
+          console.log(i)
+          return `${r('./middleware')}/${i}`
+        }
+      )
+    )
   }
 }
 
