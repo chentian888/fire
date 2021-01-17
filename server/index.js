@@ -8,7 +8,7 @@ import { from } from 'core-js/fn/array'
 const r = path => resolve(__dirname, path)
 const HOST = process.env.HOST || 'localhost'
 const PORT = 3000
-const MIDDLEWARES = ['database','common']
+const MIDDLEWARES = ['database','common','router']
 class Server {
   constructor() {
     this.app = new Koa()
@@ -49,7 +49,6 @@ class Server {
           promise.then(resolve).catch(reject)
         })
       })
-      console.log('我最先被打印出来')
     })
     this.app.listen(PORT, HOST, () => {
       console.log(`server is running at http://${HOST}:${PORT}`)
@@ -60,7 +59,10 @@ class Server {
     return R.map(
       R.compose(
         R.map(i => i(app)),
-        require,
+        (i)=>{
+          console.log(i)
+          return require(i)
+        },
         i => {
           console.log(i)
           return `${r('./middleware')}/${i}`

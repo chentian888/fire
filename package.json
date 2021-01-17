@@ -10,19 +10,22 @@
     "generate": "nuxt generate"
   },
   "dependencies": {
-    "@koa/router": "^10.0.0",
     "core-js": "2",
+    "glob": "^7.1.6",
     "koa": "^2.13.1",
     "koa-bodyparser": "^4.3.0",
+    "koa-router": "^10.0.0",
     "koa-session": "^6.1.0",
     "lodash": "^4.17.20",
     "mongoose": "^5.11.11",
     "nuxt": "^2.14.6",
     "ramda": "^0.27.1",
-    "regenerator-runtime": "^0.13.7"
+    "regenerator-runtime": "^0.13.7",
+    "xml2js": "^0.4.23"
   },
   "devDependencies": {
     "@babel/core": "^7.12.10",
+    "@babel/plugin-proposal-decorators": "^7.12.12",
     "@babel/preset-env": "^7.12.11",
     "@babel/register": "^7.12.10",
     "cross-env": "^7.0.3",
