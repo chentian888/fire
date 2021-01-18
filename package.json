@@ -19,7 +19,9 @@
     "lodash": "^4.17.20",
     "mongoose": "^5.11.11",
     "nuxt": "^2.14.6",
+    "pug": "^3.0.0",
     "ramda": "^0.27.1",
+    "raw-body": "^2.4.1",
     "regenerator-runtime": "^0.13.7",
     "sha1": "^1.1.1",
     "xml2js": "^0.4.23"

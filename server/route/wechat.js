@@ -14,8 +14,9 @@ export default class WeChat {
   }
 
   @post('/wechat-hear')
-  wechatHearPost(ctx, next) {
-    ctx.body = '<h1>路由装饰器已经成功开启</h1>'
-    console.log(ctx)
+  async wechatHearPost(ctx, next) {
+    const middle = weChatMiddleWare(config.weChat, tip)
+    await middle(ctx, next)
+    ctx.body = 'success'
   }
 }
