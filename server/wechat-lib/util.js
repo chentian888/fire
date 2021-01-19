@@ -1,5 +1,6 @@
 import xml2js from 'xml2js'
 import _ from 'lodash'
+import compileTpl from './msgTemplate'
 export function parseXML(xml) {
   return new Promise((resolve, reject) => {
     xml2js.parseString(xml, { trim: true }, (err, content) => {
@@ -54,4 +55,5 @@ export function tpl(content, msg) {
       msgType
     }
   )
+  return compileTpl(info)
 }

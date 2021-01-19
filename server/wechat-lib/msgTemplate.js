@@ -50,7 +50,7 @@ xml
         Description <![CDATA[#{description}]]>
         MusicUrl <![CDATA[#{musicUrl}]]>
         HQMusicUrl <![CDATA[#{hqMusicUrl}]]>
-        ThumbMediaId <![CDATA[#{mediaId}]]>
+        ThumbMediaId <![CDATA[#{thumbMediaId}]]>
 `
 const news = `
 xml
@@ -60,15 +60,15 @@ xml
     MsgType <![CDATA[#{msgType}]]>
     ArticleCount #{articleCount}
     Articles
-        - for (var x = 0; x < 3; x++)
+        - each item in content
             item
-                Title <![CDATA[#{x}]]>
-                Description <![CDATA[#{x}]]>
-                PicUrl <![CDATA[#{x}]]>
-                Url <![CDATA[#{x}]]>
+                Title <![CDATA[#{item.title}]]>
+                Description <![CDATA[#{item.description}]]>
+                PicUrl <![CDATA[#{item.picUrl}]]>
+                Url <![CDATA[#{item.url}]]>
 `
 // const compileXml = pug.compile(tpl, { doctype: 'xml' })
-export default compileTpl = data => {
+const compileTpl = data => {
   let tpl = ''
   if (data.msgType === 'text') {
     tpl = text
@@ -87,7 +87,7 @@ export default compileTpl = data => {
   //   compileXml = pug.compileFile(resolve(__dirname, './news.pug'), { doctype: 'xml' })
   compileXml(data)
 }
-
+export default compileTpl
 // compileTpl({
 //   msgType: 'news',
 //   toUser: 'a',
