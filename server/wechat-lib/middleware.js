@@ -17,7 +17,6 @@ export default function(opts, reply) {
       }
       console.log('get===', opts, reply)
     } else if (ctx.method === 'POST') {
-      console.log(sha, signature)
       if (sha !== signature) {
         ctx.body = 'Failed'
         return false
@@ -26,12 +25,11 @@ export default function(opts, reply) {
         length: ctx.request.header['content-length'],
         limit: '1mb'
       })
-
       const content = await parseXML(data)
       console.log(content)
       const msg = formatMessage(content.xml)
-      console.log(ctx.body)
-      const getReplyInfo = reply.call(this, [msg])
+      const getReplyInfo = await reply.call(this, msg)
+      console.log(getReplyInfo)
       const xml = tpl(getReplyInfo, msg)
       // console.log(await parseXML(data))
       // console.log('post===', opts, reply)

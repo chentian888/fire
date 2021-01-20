@@ -2,65 +2,65 @@ import pug from 'pug'
 // const pug = require('pug')
 const text = `
 xml
-    ToUserName <![CDATA[#{toUser}]]>
-    FromUserName <![CDATA[#{fromUser}]]>
+    ToUserName <![CDATA[#{toUserName}]]>
+    FromUserName <![CDATA[#{fromUserName}]]>
     CreateTime #{createTime}
     MsgType <![CDATA[#{msgType}]]>
-    Content <![CDATA[你好]]>
+    Content <![CDATA[#{content}]]>
 `
 const image = `
 xml
-    ToUserName <![CDATA[#{toUser}]]>
-    FromUserName <![CDATA[#{fromUser}]]>
+    ToUserName <![CDATA[#{toUserName}]]>
+    FromUserName <![CDATA[#{fromUserName}]]>
     CreateTime #{createTime}
     MsgType <![CDATA[#{msgType}]]>
     Image
-        MediaId <![CDATA[#{mediaId}]]>
+        MediaId <![CDATA[#{content.mediaId}]]>
 `
 
 const voice = `
 xml
-    ToUserName <![CDATA[#{toUser}]]>
-    FromUserName <![CDATA[#{fromUser}]]>
+    ToUserName <![CDATA[#{toUserName}]]>
+    FromUserName <![CDATA[#{fromUserName}]]>
     CreateTime #{createTime}
     MsgType <![CDATA[#{msgType}]]>
     Voice
-        MediaId <![CDATA[#{mediaId}]]>
+        MediaId <![CDATA[#{content.mediaId}]]>
 `
 
 const video = `
 xml
-    ToUserName <![CDATA[#{toUser}]]>
-    FromUserName <![CDATA[#{fromUser}]]>
+    ToUserName <![CDATA[#{toUserName}]]>
+    FromUserName <![CDATA[#{fromUserName}]]>
     CreateTime #{createTime}
     MsgType <![CDATA[#{msgType}]]>
     Video
-        MediaId <![CDATA[#{mediaId}]]>
-        Title <![CDATA[#{title}]]>
-        Description <![CDATA[#{description}]]>
+        MediaId <![CDATA[#{content.mediaId}]]>
+        Title <![CDATA[回复视频标题]]>
+        Description <![CDATA[回复视频描述]]>
 `
 const music = `
 xml
-    ToUserName <![CDATA[#{toUser}]]>
-    FromUserName <![CDATA[#{fromUser}]]>
+    ToUserName <![CDATA[#{toUserName}]]>
+    FromUserName <![CDATA[#{fromUserName}]]>
     CreateTime #{createTime}
     MsgType <![CDATA[#{msgType}]]>
     Music
-        Title <![CDATA[#{title}]]>
-        Description <![CDATA[#{description}]]>
-        MusicUrl <![CDATA[#{musicUrl}]]>
-        HQMusicUrl <![CDATA[#{hqMusicUrl}]]>
-        ThumbMediaId <![CDATA[#{thumbMediaId}]]>
+        Title <![CDATA[#{content.title}]]>
+        Description <![CDATA[#{content.description}]]>
+        MusicUrl <![CDATA[#{content.musicUrl}]]>
+        HQMusicUrl <![CDATA[#{content.hqMusicUrl}]]>
+        ThumbMediaId <![CDATA[#{content.thumbMediaId}]]>
 `
 const news = `
 xml
-    ToUserName <![CDATA[#{toUser}]]>
-    FromUserName <![CDATA[#{fromUser}]]>
+    ToUserName <![CDATA[#{toUserName}]]>
+    FromUserName <![CDATA[#{fromUserName}]]>
     CreateTime #{createTime}
     MsgType <![CDATA[#{msgType}]]>
-    ArticleCount #{articleCount}
+    ArticleCount #{content.length}
     Articles
-        - each item in content
+        each item in content
             item
                 Title <![CDATA[#{item.title}]]>
                 Description <![CDATA[#{item.description}]]>
@@ -85,7 +85,7 @@ const compileTpl = data => {
   }
   const compileXml = pug.compile(tpl, { doctype: 'xml' })
   //   compileXml = pug.compileFile(resolve(__dirname, './news.pug'), { doctype: 'xml' })
-  compileXml(data)
+  return compileXml(data)
 }
 export default compileTpl
 // compileTpl({
