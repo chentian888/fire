@@ -2,9 +2,9 @@ import weChatLib from '../wechat-lib'
 import config from '../config'
 const wechatConfig = {
   wechat: {
-    appId: config.appId,
-    appSecret: config.appSecret,
-    token: config.token,
+    appId: config.weChat.appId,
+    appSecret: config.weChat.appSecret,
+    token: config.weChat.token,
     getAccessToken: () => {},
     saveAccessToken: () => {},
     getTicket: () => {},
