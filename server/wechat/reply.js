@@ -2,7 +2,7 @@ export default async function(content) {
   let result = {}
   const { getWeChatClient } = require('../wechat')
   const client = getWeChatClient()
-  await client.fetchAccessToken()
+  // await client.fetchAccessToken()
 
   if (content.MsgType === 'event') {
     //   推送事件

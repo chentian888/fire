@@ -23,7 +23,7 @@ TokenSchema.pre('save', function(next) {
   next()
 })
 
-TokenSchema.static = {
+TokenSchema.statics = {
   async getAccessToken() {
     const token = await this.findOne({ name: 'access_token' }).exec()
     if (token && token.token) {
@@ -33,15 +33,17 @@ TokenSchema.static = {
   },
   async saveAccessToken(data) {
     let token = await this.findOne({ name: 'access_token' }).exec()
+    console.log('保存前查询信息', token)
     if (token) {
       token.token = data.access_token
       token.expires_in = data.expires_in
     } else {
       token = new Token({ token: data.access_token, expires_in: data.expires_in })
     }
+    await token.save()
     return token
   }
 }
 
-const Token = mongoose.Model('Token', TokenSchema)
+const Token = mongoose.model('Token', TokenSchema)
 export default Token

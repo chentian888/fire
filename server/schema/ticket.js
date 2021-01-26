@@ -21,7 +21,7 @@ TicketSchema.pre('save', function(next) {
   }
   next()
 })
-TicketSchema.static = {
+TicketSchema.statics = {
   async getTicket() {
     let ticket = await this.findOne({ name: 'ticket' }).exec()
     if (!ticket) {

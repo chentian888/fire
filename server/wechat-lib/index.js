@@ -13,6 +13,7 @@ export default class WeChatLib {
     this.token = config.token
     this.getAccessToken = config.getAccessToken
     this.saveAccessToken = config.saveAccessToken
+    this.fetchAccessToken()
   }
 
   request(method, url, opts) {
@@ -52,7 +53,13 @@ export default class WeChatLib {
     return this[operation]()
   }
   async fetchAccessToken() {
-    await this.updateAccessToken()
+    let data = await this.getAccessToken()
+    console.log('从数据库获取token', data)
+    if (!this.isValidToken(data, 'access_token')) {
+      data = await this.updateAccessToken()
+    }
+    await this.saveAccessToken(data)
+    return data
   }
   async updateAccessToken() {
     const res = await this.httpGet(weChatApi.accessToken, {
@@ -60,15 +67,18 @@ export default class WeChatLib {
       appid: this.appId,
       secret: this.appSecret
     })
-    console.log(res)
+    const expiresIn = Date.now() + (res.expires_in - 5 * 60) * 1000
+    res.expires_in = expiresIn
+    console.log('获取新token', res)
+    return res
   }
-  isValidToken(data, token) {
-    if (!data || !data[token] || data[expires_in]) {
+  isValidToken(data, name) {
+    if (!data || !data[name] || !data.expires_in) {
       return false
     }
     const now = Date.now()
     const expiresIn = data.expires_in
-    if (expiresIn - now > 10 * 60 * 1000) {
+    if (expiresIn - now > 0) {
       return true
     }
     return false
