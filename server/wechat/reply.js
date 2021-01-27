@@ -24,8 +24,10 @@ export default async function(message) {
     }
   } else if (message.MsgType === 'text') {
     if (message.Content === '1111') {
-      await client.createMenu(menu)
-      await client.getMenu()
+      await client.handle('createMenu', menu)
+      await client.handle('getMenu')
+    } else if (message.Content === '2222') {
+      await client.handle('uploadMaterial')
     }
     result = message.Content
   } else if (message.MsgType === 'image') {
