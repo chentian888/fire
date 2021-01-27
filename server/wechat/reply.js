@@ -1,32 +1,45 @@
-export default async function(content) {
+import menu from './menu'
+import { getWeChatClient } from '../wechat'
+export default async function(message) {
   let result = {}
-  const { getWeChatClient } = require('../wechat')
   const client = getWeChatClient()
   // await client.fetchAccessToken()
 
-  if (content.MsgType === 'event') {
+  if (message.MsgType === 'event') {
     //   推送事件
-    if (content.event === 'subscribe') {
-    } else if (content.event === 'unsubscribe') {
-    } else if (content.event === 'SCAN') {
-    } else if (content.event === 'LOCATION') {
-    } else if (content.event === 'CLICK') {
-    } else if (content.event === 'VIEW') {
+    if (message.Event === 'subscribe') {
+      result = '订阅成功'
+    } else if (message.Event === 'unsubscribe') {
+      result = '取消订阅'
+    } else if (message.Event === 'CLICK') {
+      // 菜单点击
+      result = '点赞成功'
+    } else if (message.Event === 'scancode_push') {
+      // 菜单扫码
+      result = message.EventKey
+    } else if (message.Event === 'scancode_waitmsg') {
+      result = message.EventKey
+    } else if (message.Event === 'view_miniprogram') {
+      // 菜单跳转小程序
     }
-  } else if (content.MsgType === 'text') {
-    result = content.Content
-  } else if (content.MsgType === 'image') {
-    result = { type: 'image', mediaId: content.MediaId }
-  } else if (content.MsgType === 'voice') {
-    result = { type: 'voice', mediaId: content.MediaId }
-  } else if (content.MsgType === 'video') {
-    const { MediaId, Title, Description } = content
+  } else if (message.MsgType === 'text') {
+    if (message.Content === '1111') {
+      await client.createMenu(menu)
+      await client.getMenu()
+    }
+    result = message.Content
+  } else if (message.MsgType === 'image') {
+    result = { type: 'image', mediaId: message.MediaId }
+  } else if (message.MsgType === 'voice') {
+    result = { type: 'voice', mediaId: message.MediaId }
+  } else if (message.MsgType === 'video') {
+    const { MediaId, Title, Description } = message
     result = { type: 'video', mediaId: MediaId, title: Title, description: Description }
-  } else if (content.MsgType === 'location') {
-    const { Location_X, Location_Y, Label } = content
+  } else if (message.MsgType === 'location') {
+    const { Location_X, Location_Y, Label } = message
     result = Location_X + ':' + Location_Y + ':' + Label
-  } else if (content.MsgType === 'link') {
-    const { Title, Description, Url } = content
+  } else if (message.MsgType === 'link') {
+    const { Title, Description, Url } = message
     result = [
       {
         title: Title,

@@ -1,9 +1,17 @@
 import fetch from 'node-fetch'
 import _ from 'lodash'
-const weChatBaseUrl = 'https://api.weixin.qq.com/cgi-bin/'
+const weChatBaseUrl = 'https://api.weixin.qq.com/cgi-bin'
 
 const weChatApi = {
-  accessToken: weChatBaseUrl + 'token'
+  accessToken: weChatBaseUrl + '/token',
+  user: {},
+  tag: {},
+  menu: {
+    create: weChatBaseUrl + '/menu/create',
+    get: weChatBaseUrl + '/menu/get',
+    del: weChatBaseUrl + '/menu/delete'
+  },
+  material: {}
 }
 
 export default class WeChatLib {
@@ -13,6 +21,7 @@ export default class WeChatLib {
     this.token = config.token
     this.getAccessToken = config.getAccessToken
     this.saveAccessToken = config.saveAccessToken
+    console.log('=========', 'constructor')
     this.fetchAccessToken()
   }
 
@@ -53,12 +62,13 @@ export default class WeChatLib {
     return this[operation]()
   }
   async fetchAccessToken() {
+    console.log('=========', 'fetchAccessToken')
     let data = await this.getAccessToken()
     console.log('从数据库获取token', data)
     if (!this.isValidToken(data, 'access_token')) {
       data = await this.updateAccessToken()
+      await this.saveAccessToken(data)
     }
-    await this.saveAccessToken(data)
     return data
   }
   async updateAccessToken() {
@@ -83,4 +93,27 @@ export default class WeChatLib {
     }
     return false
   }
+  // 创建菜单
+  async createMenu(menu) {
+    const token = await this.fetchAccessToken()
+    const url = weChatApi.menu.create + `?access_token=${token.token}`
+    await this.httpPost(url, menu)
+  }
+  // 删除菜单
+  async delMenu() {
+    const token = await this.fetchAccessToken()
+    await this.httpGet(weChatApi.menu.del, {
+      access_token: token.token
+    })
+  }
+  // 获取菜单
+  async getMenu() {
+    const token = await this.fetchAccessToken()
+    const res = await this.httpGet(weChatApi.menu.get, {
+      access_token: token.token
+    })
+    console.log(JSON.stringify(res))
+  }
+  // 素材管理
+  // 用户管理
 }
