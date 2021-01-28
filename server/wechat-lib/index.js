@@ -1,7 +1,7 @@
 import fs from 'fs'
-import { resolve } from 'path'
 import fetch from 'node-fetch'
-import formstream from 'formstream'
+import request from 'request-promise'
+// import FormData from 'form-data'
 import _ from 'lodash'
 const weChatBaseUrl = 'https://api.weixin.qq.com/cgi-bin'
 
@@ -128,41 +128,74 @@ export default class WeChatLib {
     console.log(JSON.stringify(res))
   }
   // 素材管理
-  uploadMaterial(token) {
-    const url = weChatApi.permanent.upload + `?access_token=${token}&type='image'`
-    var form = formstream()
-    fs.stat(resolve(__dirname, './ice.jpeg'), async (err, stat) => {
-      form.file('file', resolve(__dirname, './ice.jpeg'), 'ice.jpeg', stat.size)
-      console.log(form)
-      const headers = form.headers()
-      const res = await this.httpPost(
-        url,
-        {
-          media: form,
-          'form-data': {
-            filename: 'ice.jpeg',
-            filelength: stat.size,
-            'content-type': 'image/jpeg'
-          }
-        },
-        {
-          ...form.headers()
-        }
-      )
-      console.log(res)
+  async uploadMaterial(token, type, uploadMaterial, permanent) {
+    console.log(token, type, uploadMaterial, permanent)
+    // 默认临时
+    const suffix1 = `?access_token=${token}`
+    const suffix2 = `?access_token=${token}&type=${type}`
+    let url = weChatApi.temporary.upload + suffix2
+    let options = {}
+    if (permanent) {
+      // 永久
+      url = weChatApi.permanent.upload + suffix2
+      if (type === 'news') {
+        url = weChatApi.permanent.uploadNews + suffix1
+        options = { body: uploadMaterial }
+      } else if (type === 'pic') {
+        url = weChatApi.permanent.uploadNewsPic + suffix1
+      }
+    }
+    if (type === 'pic' || type === 'image' || type === 'video' || type === 'voice' || type === 'thumb') {
+      options = {
+        formData: { media: fs.createReadStream(uploadMaterial) }
+      }
+    }
+
+    const res = await request({
+      method: 'POST',
+      uri: weChatBaseUrl + url,
+      ...options
     })
+    console.log(res)
   }
-  async fetchMaterial(token) {
-    // const url = weChatApi.permanent.uploadNewsPic + `?access_token=${token}`
-    // await this.httpPost(url, {
-    //   filename: '',
-    //   filelength: '',
-    //   'content-type': ''
-    // })
+  async fetchMaterial(token, mediaId) {
+    const url = weChatApi.temporary.fetch + `?access_token=${token}&media_id=${mediaId}`
+    const res = await request({
+      method: 'GET',
+      uri: weChatBaseUrl + url
+    })
+    return res
   }
   deleteMaterial() {}
   updateMaterial() {}
-  countMaterial() {}
-  batchMaterial() {}
+  async countMaterial(token) {
+    const url = weChatApi.permanent.count + `?access_token=${token}`
+    const res = await request({
+      method: 'GET',
+      uri: weChatBaseUrl + url,
+      body: {
+        voice_count: 20,
+        video_count: 20,
+        image_count: 20,
+        news_count: 20
+      },
+      json: true
+    })
+    return res
+  }
+  async batchMaterial(token) {
+    const url = weChatApi.permanent.batch + `?access_token=${token}`
+    const res = await request({
+      method: 'POST',
+      uri: weChatBaseUrl + url,
+      body: {
+        type: 'image',
+        offset: 0,
+        count: 20
+      },
+      json: true
+    })
+    return res
+  }
   // 用户管理
 }
