@@ -1,4 +1,3 @@
-import { resolve } from 'path'
 import menu from './menu'
 import { getWeChatClient } from '../wechat'
 export default async function(message) {
@@ -27,9 +26,6 @@ export default async function(message) {
     if (message.Content === '1111') {
       await client.handle('createMenu', menu)
       await client.handle('getMenu')
-    } else if (message.Content === '2222') {
-      await client.handle('uploadMaterial', 'image', resolve(__dirname, '../wechat-lib/ice.jpeg'))
-      // await client.handle('fetchMaterial', 'jpqAb3JmKMSWHPpL3fr2yDM9oK1JrsLv2BokouzGJNqVt5oWBqmdBmONpwpb4HDY')
     }
     result = message.Content
   } else if (message.MsgType === 'image') {

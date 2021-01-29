@@ -27,6 +27,13 @@ const weChatApi = {
     update: '/material/update_news',
     count: '/material/get_materialcount',
     batch: '/material/batchget_material'
+  },
+  user: {
+    tag: '/tags/create',
+    remark: '/user/info/updateremark',
+    baseInfo: '/user/info',
+    list: '/user/get',
+    blackList: '/tags/members/getblacklist'
   }
 }
 
@@ -39,44 +46,12 @@ export default class WeChatLib {
     this.saveAccessToken = config.saveAccessToken
     this.fetchAccessToken()
   }
-
-  request(method, url, opts) {
-    const options = Object.assign(
-      {
-        method: method.toUpperCase() || 'GET',
-        headers: { 'Content-Type': 'application/json' }
-      },
-      opts
-    )
-    return fetch(weChatBaseUrl + url, options)
-      .then(res => res.json())
-      .then(json => {
-        return json
-      })
-  }
-  async httpGet(url, data = {}, opts) {
-    if (!_.isObject(data)) {
-      new Error('data must be Object')
-      return false
-    }
-    const query = []
-    for (let [key, val] of Object.entries(data)) {
-      query.push(`${key}=${val}`)
-    }
-    url += '?' + query.join('&')
-    return await this.request('get', url, data, opts)
-  }
-  async httpPost(url, data = {}, opts) {
-    console.log(url, data, opts)
-    if (!_.isObject(data)) {
-      new Error('data must be Object')
-      return false
-    }
-    return await this.request('post', url, { body: JSON.stringify(data), ...opts })
-  }
   async handle(operation, ...args) {
     const token = await this.fetchAccessToken()
-    return this[operation](token.token, ...args)
+    const options = this[operation](token.token, ...args)
+    console.log(options)
+    const res = await request({ uri: weChatBaseUrl + options.url, ...options })
+    return res
   }
   async fetchAccessToken() {
     let data = await this.getAccessToken()
@@ -88,11 +63,8 @@ export default class WeChatLib {
     return data
   }
   async updateAccessToken() {
-    const res = await this.httpGet(weChatApi.accessToken, {
-      grant_type: 'client_credential',
-      appid: this.appId,
-      secret: this.appSecret
-    })
+    const url = weChatBaseUrl + weChatApi.accessToken + `?grant_type=client_credential&appid=${this.appId}&secret=${this.appSecret}`
+    const res = await request({ method: 'GET', url })
     const expiresIn = Date.now() + (res.expires_in - 5 * 60) * 1000
     res.expires_in = expiresIn
     console.log('获取新token', res)
@@ -110,26 +82,22 @@ export default class WeChatLib {
     return false
   }
   // 创建菜单
-  async createMenu(token, menu = {}) {
+  createMenu(token, menu = {}) {
     const url = weChatApi.menu.create + `?access_token=${token}`
-    await this.httpPost(url, menu)
+    return { method: 'POST', url, body: menu, json: true }
   }
   // 删除菜单
-  async delMenu(token) {
-    await this.httpGet(weChatApi.menu.del, {
-      access_token: token
-    })
+  delMenu(token) {
+    const url = weChatApi.menu.del + `?access_token=${token}`
+    return { method: 'GET', url }
   }
   // 获取菜单
-  async getMenu(token) {
-    const res = await this.httpGet(weChatApi.menu.get, {
-      access_token: token
-    })
-    console.log(JSON.stringify(res))
+  getMenu(token) {
+    const url = weChatApi.menu.get + `?access_token=${token}`
+    return { method: 'GET', url }
   }
   // 素材管理
-  async uploadMaterial(token, type, uploadMaterial, permanent) {
-    console.log(token, type, uploadMaterial, permanent)
+  uploadMaterial(token, type, uploadMaterial, permanent) {
     // 默认临时
     const suffix1 = `?access_token=${token}`
     const suffix2 = `?access_token=${token}&type=${type}`
@@ -150,52 +118,41 @@ export default class WeChatLib {
         formData: { media: fs.createReadStream(uploadMaterial) }
       }
     }
-
-    const res = await request({
-      method: 'POST',
-      uri: weChatBaseUrl + url,
-      ...options
-    })
-    console.log(res)
+    return { method: 'POST', url, ...options }
   }
-  async fetchMaterial(token, mediaId) {
+  fetchTemporaryMaterial(token, mediaId) {
     const url = weChatApi.temporary.fetch + `?access_token=${token}&media_id=${mediaId}`
-    const res = await request({
-      method: 'GET',
-      uri: weChatBaseUrl + url
-    })
-    return res
+    return { method: 'GET', url }
   }
-  deleteMaterial() {}
-  updateMaterial() {}
-  async countMaterial(token) {
+  fetchMaterial(token, mediaId, permanent) {
+    let url = weChatApi.temporary.fetch + `?access_token=${token}&media_id=${mediaId}`
+    let option = { method: 'GET', url }
+    if (permanent) {
+      url = weChatApi.permanent.fetch + `?access_token=${token}`
+      option = { method: 'POST', url, body: { media_id: mediaId }, json: true }
+    }
+    return option
+  }
+  deleteMaterial(token, mediaId) {
+    const url = weChatApi.permanent.del + `?access_token=${token}`
+    return { method: 'POST', url, body: { media_id: mediaId }, json: true }
+  }
+  updateMaterial(token) {
+    const url = weChatApi.permanent.update + `?access_token=${token}`
+    return { method: 'POST', url, body: { media_id: mediaId }, json: true }
+  }
+  countMaterial(token) {
     const url = weChatApi.permanent.count + `?access_token=${token}`
-    const res = await request({
-      method: 'GET',
-      uri: weChatBaseUrl + url,
-      body: {
-        voice_count: 20,
-        video_count: 20,
-        image_count: 20,
-        news_count: 20
-      },
-      json: true
-    })
-    return res
+    return { method: 'GET', url }
   }
-  async batchMaterial(token) {
+  batchMaterial(token) {
     const url = weChatApi.permanent.batch + `?access_token=${token}`
-    const res = await request({
-      method: 'POST',
-      uri: weChatBaseUrl + url,
-      body: {
-        type: 'image',
-        offset: 0,
-        count: 20
-      },
-      json: true
-    })
-    return res
+    const data = {
+      type: 'image',
+      offset: 0,
+      count: 20
+    }
+    return { method: 'POST', url, body: data, json: true }
   }
   // 用户管理
 }
