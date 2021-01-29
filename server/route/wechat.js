@@ -38,4 +38,24 @@ export default class WeChat {
     // ctx.set('Content-Type', 'image/jpeg')
     ctx.body = res
   }
+  @get('/tag')
+  async wechatTag(ctx, next) {
+    const client = getWeChatClient()
+    // const { name } = ctx.query
+    const { id = '', name = '' } = ctx.query
+    // const res = await client.handle('createTag', name)
+    // const res = await client.handle('getTag')
+    // const res = await client.handle('deletedTag', id)
+    // const res = await client.handle('updaetTag', id, name)
+    // const res = await client.handle('getMember', id)
+    // const res = await client.handle('batchInTag', id, 'ojYkj6in1O6JxQMZ4UWUQ39gHwU4')
+    // const res = await client.handle('batchOutTag', id, 'ojYkj6in1O6JxQMZ4UWUQ39gHwU4')
+    // const res = await client.handle('memberTag', 'ojYkj6in1O6JxQMZ4UWUQ39gHwU4')
+    const res = await client.handle('getUserInfo', 'ojYkj6in1O6JxQMZ4UWUQ39gHwU4')
+    // const res = await client.handle('fetchUserList')
+    // const res = await client.handle('getblacklist')
+    // const res = await client.handle('remarkUser', 'ojYkj6in1O6JxQMZ4UWUQ39gHwU4', '我就是公众号拥有者')
+
+    ctx.body = res
+  }
 }
