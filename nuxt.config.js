@@ -8,14 +8,14 @@ export default {
       { hid: 'description', name: 'description', content: '' }
     ],
     link: [{ rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }],
-    script: [{ src: 'http://g.tbcdn.cn/mtb/lib-flexible/0.3.4/??flexible_css.js,flexible.js' }]
+    script: []
   },
 
   // Global CSS (https://go.nuxtjs.dev/config-css)
-  css: ['~/assets/scss/reset.scss'],
+  css: ['~/assets/scss/reset.scss', '~/assets/scss/global.scss'],
 
   // Plugins to run before rendering page (https://go.nuxtjs.dev/config-plugins)
-  plugins: [],
+  plugins: [{ src: '~/plugins/vant.js' }],
 
   // Auto import components (https://go.nuxtjs.dev/config-components)
   components: true,
@@ -28,18 +28,25 @@ export default {
 
   // Build Configuration (https://go.nuxtjs.dev/config-build)
   build: {
+    transpile: ['vant'],
     postcss: {
       plugins: {
         autoprefixer: {},
-        'postcss-pxtorem': {
-          rootValue: 32,
+        'postcss-px-to-viewport': {
+          unitToConvert: 'px',
+          viewportWidth: 320,
           unitPrecision: 5,
-          propList: ['*'],
+          propList: ['*','!font-size'],
+          viewportUnit: 'vw',
+          fontViewportUnit: 'px',
           selectorBlackList: [],
-          replace: true,
+          minPixelValue: 1,
           mediaQuery: false,
-          minPixelValue: 0,
-          exclude: /node_modules/i
+          replace: true,
+          exclude: [],
+          landscape: false,
+          landscapeUnit: 'vw',
+          landscapeWidth: 568
         }
       }
     }

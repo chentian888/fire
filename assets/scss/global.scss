@@ -1,0 +1,10 @@
+html,
+body {
+  height: 100%;
+  color: #222;
+}
+body > div,
+body > div > div {
+  width: inherit;
+  height: inherit;
+}
