@@ -38,11 +38,20 @@
 </template>
 
 <script>
+import { mapState } from 'vuex'
 export default {
   data() {
     return {
       list: [1, 2, 3, 4]
     }
+  },
+  computed: {
+    ...mapState(['houses'])
+  },
+  created() {
+    console.log(this)
+    // this.$store.dispatch('fetchHouses')
+    // this.$store.dispatch('fetchCharacters')
   }
 }
 </script>
