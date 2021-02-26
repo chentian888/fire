@@ -1,8 +1,9 @@
 import mongoose from 'mongoose'
 
 const Schema = mongoose.Schema
+const Mixed = Schema.Types.Mixed
 
-const wikiHouseModel = new Schema({
+const WikiHouseSchema = new Schema({
   name: String,
   cname: String,
   words: String,
@@ -31,5 +32,5 @@ const wikiHouseModel = new Schema({
   }
 })
 
-const WikiHouse = mongoose.model('WikiHouse', wikiHouseModel)
+const WikiHouse = mongoose.model('WikiHouse', WikiHouseSchema)
 export default WikiHouse

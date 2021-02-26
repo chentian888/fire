@@ -1,10 +1,10 @@
 import { resolve } from 'path'
-import { api, get, post } from '../decorator/router'
+import { controller, get, post } from '../decorator/router'
 import reply from '../wechat/reply'
 import weChatMiddleWare from '../wechat-lib/middleware'
 import config from '../config'
 import { getWeChatClient } from '../wechat'
-@api('')
+@controller('')
 export default class WeChat {
   @get('/wechat-hear')
   async wechatHearGet(ctx, next) {

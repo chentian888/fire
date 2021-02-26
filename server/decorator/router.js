@@ -28,7 +28,7 @@ export default class Route {
   }
 }
 
-export const api = path => target => (target.prototype[symbolPrefix] = path)
+export const controller = path => target => (target.prototype[symbolPrefix] = path)
 
 const router = conf => (target, key, descriptor) => {
   conf.path = normalizePath(conf.path)

@@ -1,4 +1,5 @@
 import WikiHouse from '../schema/wikiHouse'
+import WikiCharacter from '../schema/wikiCharacter'
 
 export async function getHouses() {
   const data = await WikiHouse.find({})
@@ -11,5 +12,8 @@ export async function getHouses() {
   return data
 }
 export async function getHouse(id) {}
-export async function getCharacters() {}
+export async function getCharacters() {
+  const data = await WikiCharacter.find({}).exec()
+  return data
+}
 export async function getCharacter(id) {}

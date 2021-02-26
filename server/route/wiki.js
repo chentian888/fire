@@ -2,13 +2,13 @@ import { controller, get, post } from '../decorator/router'
 import api from '../api'
 
 @controller('/wiki')
-export default class Wiki {
+export default class WikiController {
   @get('/houses')
   async getHouses(ctx, next) {
     const data = await api.wiki.getHouses()
     console.log(data)
     ctx.body = {
-      data: data,
+      data,
       success: true
     }
   }
@@ -22,8 +22,12 @@ export default class Wiki {
   }
 
   @get('/characters')
-  async getCharacters() {
-    await api.wiki.getCharacters()
+  async getCharacters(ctx, next) {
+    const data = await api.wiki.getCharacters()
+    ctx.body = {
+      data,
+      success: true
+    }
   }
 
   @get('/characters/:_id')
