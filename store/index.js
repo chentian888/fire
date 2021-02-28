@@ -7,7 +7,9 @@ const createStore = () => {
   return new Vuex.Store({
     state: {
       houses: [],
+      house: {},
       characters: [],
+      character: {},
       cities: []
     },
     getters,

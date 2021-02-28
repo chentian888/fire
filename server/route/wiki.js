@@ -18,7 +18,11 @@ export default class WikiController {
     const { params } = ctx
     const { _id } = params
     if (!_id) return (ctx.body = { success: false, err: '_id is required' })
-    await api.wiki.getHouse()
+    const data = await api.wiki.getHouse(_id)
+    ctx.body = {
+      data,
+      success: true
+    }
   }
 
   @get('/characters')

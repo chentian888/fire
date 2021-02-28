@@ -5,9 +5,20 @@ export default {
     state.houses = res.data.data
     return res
   },
+  async fetchHouse({ state }, { id }) {
+    const res = await Services.fetchHouse(id)
+    console.log(res)
+    state.house = res.data.data
+    return res
+  },
   async fetchCharacters({ state }) {
     const res = await Services.fetchCharacters()
     state.characters = res.data.data
+    return res
+  },
+  async fetchCharacter({ state }, { id }) {
+    const res = await Services.fetchCharacter(id)
+    state.character = res.data.data
     return res
   }
 }

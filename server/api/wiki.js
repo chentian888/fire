@@ -11,7 +11,12 @@ export async function getHouses() {
 
   return data
 }
-export async function getHouse(id) {}
+export async function getHouse(id) {
+  const data = await WikiHouse.findOne({ _id: id })
+    .populate({ path: 'swornMembers.character', select: '_id name cname profile' })
+    .exec()
+  return data
+}
 export async function getCharacters() {
   const data = await WikiCharacter.find({}).exec()
   return data

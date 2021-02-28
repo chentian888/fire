@@ -1,7 +1,7 @@
 <template>
   <div class="container">
     <div class="house">
-      <div class="items" v-for="(item, index) in houses" :key="index">
+      <div class="items" v-for="(item, index) in houses" :key="index" @click="$router.push({ name: 'house', query: { id: item._id } })">
         <div class="desc">
           <div class="words">{{ item.word }}</div>
           <div class="name">{{ item.name }}</div>
@@ -13,7 +13,7 @@
     <div class="character">
       <div class="title">主要人物</div>
       <div class="section">
-        <div class="items" v-for="(item, index) in characters" :key="index">
+        <div class="items" v-for="(item, index) in characters" :key="index" @click="$router.push({ name: 'character', query: { id: item._id } })">
           <img class="thumb" src="" />
           <div class="desc">
             <div class="name">{{ item.name }}</div>
