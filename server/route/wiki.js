@@ -35,7 +35,14 @@ export default class WikiController {
   }
 
   @get('/characters/:_id')
-  async getCharacter() {
-    await api.wiki.getCharacter()
+  async getCharacter(ctx, next) {
+    const { params } = ctx
+    const { _id } = params
+    if (!_id) return (ctx.body = { success: false, err: '_id is required' })
+    const data = await api.wiki.getCharacter(_id)
+    ctx.body = {
+      data,
+      success: true
+    }
   }
 }

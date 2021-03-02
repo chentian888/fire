@@ -21,4 +21,8 @@ export async function getCharacters() {
   const data = await WikiCharacter.find({}).exec()
   return data
 }
-export async function getCharacter(id) {}
+export async function getCharacter(id) {
+  const data = await WikiCharacter.findOne({ _id: id }).exec()
+  console.log(data)
+  return data
+}
