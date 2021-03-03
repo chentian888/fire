@@ -39,11 +39,11 @@ export default {
           propList: ['*','!font-size'],
           viewportUnit: 'vw',
           fontViewportUnit: 'px',
-          selectorBlackList: [],
+          selectorBlackList: ['admin'],
           minPixelValue: 1,
           mediaQuery: false,
           replace: true,
-          exclude: [],
+          exclude:  [],
           landscape: false,
           landscapeUnit: 'vw',
           landscapeWidth: 568
