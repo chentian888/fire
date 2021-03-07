@@ -14,6 +14,15 @@ class Service {
   fetchCharacter(id) {
     return axios.get(`${baseUrl}/wiki/characters/${id}`)
   }
+  fetchProducts() {
+    return axios.get(`${baseUrl}/api/products`)
+  }
+  saveProduct(data = {}) {
+    return axios.post(`${baseUrl}/api/products`, { ...data })
+  }
+  putProduct(data = {}) {
+    return axios.put(`${baseUrl}/api/products`, { ...data })
+  }
 }
 
 export default new Service()

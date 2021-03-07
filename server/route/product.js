@@ -62,7 +62,7 @@ export default class ProductController {
 
   @put('/products')
   async putPorduct(ctx, next) {
-    const { id = '', title = '', intro = '', price = '' } = ctx.request.body
+    const { id = '', iamges = [], title = '', intro = '', price = '', parameters = [] } = ctx.request.body
     if (!id) {
       ctx.body = {
         err: '_id is required',
@@ -78,9 +78,12 @@ export default class ProductController {
       }
       return
     }
+    console.log(parameters)
+    product.iamges = xss(iamges)
     product.title = xss(title)
     product.intro = xss(intro)
     product.price = xss(price)
+    product.parameters = R.map(item => ({ key: xss(item.key), value: xss(item.value) }))(parameters)
     try {
       const data = await api.product.putProduct(product)
       ctx.body = {

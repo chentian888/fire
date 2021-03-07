@@ -13,32 +13,37 @@
           </tr>
         </thead>
         <tbody>
-          <tr>
-            <td>23</td>
-            <td>23</td>
-            <td>23</td>
-            <td>23</td>
-            <td>23</td>
+          <tr v-for="(item, index) in products" :key="index">
+            <td>{{ item.images }}</td>
+            <td>{{ item.title }}</td>
+            <td>{{ item.price }}</td>
+            <td>{{ item.intro }}</td>
             <td>
-              <button class="btn material-icon">edit</button>
-              <button class="btn material-icon">delete</button>
+              <div v-for="(attr, index) in item.parameters" :key="index">
+                <span>{{ attr.key }}</span
+                ><span>{{ attr.value }}</span>
+              </div>
+            </td>
+            <td>
+              <button class="btn material-icon" @click="changeProduct(item)">edit</button>
+              <button class="btn material-icon" @click="removeProduct">delete</button>
             </td>
           </tr>
         </tbody>
       </table>
     </div>
-    <div class="edit-product active">
+    <div :class="['edit-product', active ? 'active' : '']">
       <div class="edit-header">
         <div class="material-icon">edit</div>
         <div>
-          <div class="material-icon">close</div>
+          <div class="material-icon" @click="toggleModal(false)">close</div>
         </div>
       </div>
       <div class="edit-body">
         <div class="form edit-form">
-          <div class="input-group"><label>标题</label><input type="text" /></div>
-          <div class="input-group"><label>价格</label><input type="text" /></div>
-          <div class="input-group"><label>简介</label><input type="text" /></div>
+          <div class="input-group"><label>标题</label><input type="text" v-model="form.title" /></div>
+          <div class="input-group"><label>价格</label><input type="text" v-model="form.price" /></div>
+          <div class="input-group"><label>简介</label><input type="text" v-model="form.intro" /></div>
           <div class="input-group">
             <label>图片</label>
             <div class="upload-images">
@@ -75,10 +80,10 @@
           <div class="input-group">
             <label>参数</label>
             <div class="parameters">
-              <div class="inputs">
-                <input type="text" />
-                <input type="text" />
-                <div class="remove">
+              <div class="inputs" v-for="(item, index) in form.parameters" :key="index">
+                <input type="text" v-model="item.key" />
+                <input type="text" v-model="item.value" />
+                <div class="remove" @click="removeParams(index)">
                   <div class="material-icon">remove</div>
                 </div>
               </div>
@@ -87,21 +92,22 @@
         </div>
       </div>
       <div class="edit-footer">
-        <button class="btn save">创建宝贝</button>
-        <button class="btn save">保存修改</button>
-        <div class="btn add-parameter">
+        <div class="btn save" @click="save" v-if="modalType === '0'">创建宝贝</div>
+        <div class="btn save" @click="save" v-if="modalType === '1'">保存修改</div>
+        <div class="btn add-parameter" @click="addParams">
           <div class="material-icon">add 添加参数</div>
         </div>
       </div>
     </div>
-    <div class="float-btn">
+    <div class="float-btn" @click="addProduct">
       <div class="material-icon">add</div>
     </div>
   </div>
 </template>
 
 <script>
-import { mapActions, mapState } from 'vuex'
+import { mapActions, mapState, mapMutations } from 'vuex'
+import _ from 'lodash'
 export default {
   layout: 'admin',
   head() {
@@ -110,15 +116,55 @@ export default {
     }
   },
   data() {
-    return {}
+    return {
+      active: false,
+      modalType: '', // 0-新增/1-修改
+      form: {
+        parameters: [{ key: '', value: '' }]
+      }
+    }
   },
   computed: {
-    ...mapState(['character'])
+    ...mapState(['products'])
   },
   methods: {
-    ...mapActions(['fetchCharacter'])
+    ...mapActions(['fetchProducts', 'saveProduct', 'putProduct']),
+    // ...mapMutations(['updatePorducts']),
+    save() {
+      const { _id, title, price, intro, parameters } = this.form
+      if (this.modalType === '0') {
+        this.$store.dispatch('saveProduct', { title, price, intro, parameters })
+      } else if (this.modalType === '1') {
+        this.$store.dispatch('putProduct', { id: _id, title, price, intro, parameters })
+      }
+      this.toggleModal(false)
+    },
+    addProduct() {
+      this.modalType = '0'
+      this.toggleModal(true)
+    },
+    changeProduct(row) {
+      this.modalType = '1'
+      this.form = _.cloneDeep(row)
+      this.toggleModal(true)
+    },
+    removeProduct() {},
+    toggleModal(flag) {
+      if (!flag) {
+        this.form = { parameters: [{ key: '', value: '' }] }
+      }
+      this.active = flag
+    },
+    removeParams(index) {
+      this.form.parameters.splice(index, 1)
+    },
+    addParams() {
+      this.form.parameters.push({ key: '', value: '' })
+    }
   },
-  beforeCreate() {}
+  created() {
+    this.fetchProducts()
+  }
 }
 </script>
 

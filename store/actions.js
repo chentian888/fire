@@ -20,5 +20,20 @@ export default {
     const res = await Services.fetchCharacter(id)
     state.character = res.data.data
     return res
+  },
+  async fetchProducts({ state }) {
+    const res = await Services.fetchProducts()
+    state.products = res.data.data
+    return res
+  },
+  async saveProduct({ state, dispatch }, data = {}) {
+    const res = await Services.saveProduct(data)
+    dispatch('fetchProducts')
+    return res
+  },
+  async putProduct({ state, dispatch }, data = {}) {
+    const res = await Services.putProduct(data)
+    dispatch('fetchProducts')
+    return res
   }
 }

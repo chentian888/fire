@@ -8,8 +8,8 @@
   </div>
 </template>
 <script>
-import vHeader from '~/components/header.vue'
-import vAside from '~/components/aside.vue'
+import vHeader from '~/components/Header.vue'
+import vAside from '~/components/Aside.vue'
 export default {
   components: {
     vHeader,

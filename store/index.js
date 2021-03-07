@@ -10,7 +10,8 @@ const createStore = () => {
       house: {},
       characters: [],
       character: {},
-      cities: []
+      cities: [],
+      products: []
     },
     getters,
     actions,

@@ -90,7 +90,6 @@ export default {
     ...mapState(['houses', 'characters'])
   },
   created() {
-    console.log(this)
     this.$store.dispatch('fetchHouses')
     this.$store.dispatch('fetchCharacters')
   },
