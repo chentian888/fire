@@ -1,6 +1,102 @@
 <template>
-  <div class="container admin">
-    asdfas
+  <div class="content admin">
+    <div class="related-products">
+      <table class="table">
+        <thead>
+          <tr>
+            <th>图片</th>
+            <th>标题</th>
+            <th>价格</th>
+            <th>简介</th>
+            <th>参数</th>
+            <th>修改</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>23</td>
+            <td>23</td>
+            <td>23</td>
+            <td>23</td>
+            <td>23</td>
+            <td>
+              <button class="btn material-icon">edit</button>
+              <button class="btn material-icon">delete</button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="edit-product active">
+      <div class="edit-header">
+        <div class="material-icon">edit</div>
+        <div>
+          <div class="material-icon">close</div>
+        </div>
+      </div>
+      <div class="edit-body">
+        <div class="form edit-form">
+          <div class="input-group"><label>标题</label><input type="text" /></div>
+          <div class="input-group"><label>价格</label><input type="text" /></div>
+          <div class="input-group"><label>简介</label><input type="text" /></div>
+          <div class="input-group">
+            <label>图片</label>
+            <div class="upload-images">
+              <div class="img">
+                <img src="" alt="" />
+                <div class="tools">
+                  <div class="material-icon"></div>
+                </div>
+              </div>
+              <div class="upload-btn">
+                <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                  <g id="ic_backup_black_24px" transform="translate(-1.000000, -6.000000)">
+                    <polygon id="Shape" points="0 0 55 0 55 55 0 55" />
+                    <path
+                      id="outline"
+                      d="M42.6907609,20.7503727 C41.2853571,13.6200155 35.0230435,8.26708075 27.5,8.26708075 C21.5270342,8.26708075 16.339441,11.6565839 13.7559783,16.6168323 C7.535,17.2781988 2.69875776,22.5484627 2.69875776,28.9347826 C2.69875776,35.7757919 8.25836957,41.3354037 15.0993789,41.3354037 L41.9673913,41.3354037 C47.671677,41.3354037 52.3012422,36.7058385 52.3012422,31.0015528 C52.3012422,25.5452795 48.0643634,21.1223913 42.6907609,20.7503727 Z"
+                      stroke="#78909C"
+                      stroke-width="3"
+                    />
+                    <path
+                      id="Shape"
+                      d="M42.6907609,20.7503727 C41.2853571,13.6200155 35.0230435,8.26708075 27.5,8.26708075 C21.5270342,8.26708075 16.339441,11.6565839 13.7559783,16.6168323 C7.535,17.2781988 2.69875776,22.5484627 2.69875776,28.9347826 C2.69875776,35.7757919 8.25836957,41.3354037 15.0993789,41.3354037 L41.9673913,41.3354037 C47.671677,41.3354037 52.3012422,36.7058385 52.3012422,31.0015528 C52.3012422,25.5452795 48.0643634,21.1223913 42.6907609,20.7503727 Z M31.6335404,26.8680124 L31.6335404,35.1350932 L23.3664596,35.1350932 L23.3664596,26.8680124 L17.1661491,26.8680124 L27.5,16.5341615 L37.8338509,26.8680124 L31.6335404,26.8680124 Z"
+                      fill="#CFD8DC"
+                      fill-rule="nonzero"
+                    />
+                  </g>
+                </g>
+                <br />
+                <div class="text">上传图片</div>
+                <input type="file" />
+              </div>
+            </div>
+          </div>
+          <div class="input-group">
+            <label>参数</label>
+            <div class="parameters">
+              <div class="inputs">
+                <input type="text" />
+                <input type="text" />
+                <div class="remove">
+                  <div class="material-icon">remove</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="edit-footer">
+        <button class="btn save">创建宝贝</button>
+        <button class="btn save">保存修改</button>
+        <div class="btn add-parameter">
+          <div class="material-icon">add 添加参数</div>
+        </div>
+      </div>
+    </div>
+    <div class="float-btn">
+      <div class="material-icon">add</div>
+    </div>
   </div>
 </template>
 
@@ -37,6 +133,13 @@ export default {
   display: flex;
   justify-content: center;
   align-items: center;
+}
+
+.admin.content {
+  flex: 1;
+  height: calc(100vh - 56px);
+  padding: 10px 16px 50px 16px;
+  overflow: scroll;
 }
 .admin hr {
   margin: 0.6 * $gutter 0;
@@ -98,15 +201,8 @@ export default {
   margin-bottom: 0.6 * $gutter;
 }
 
-.admin .content {
-  flex: 1;
-  height: calc(100vh - 56px);
-  padding: 10px 16px 50px 16px;
-  overflow: scroll;
-}
-
 .admin .houses {
-  width: calc(100% - 32px);
+  width: 100%;
   padding: 0 16px;
   display: flex;
   flex-wrap: wrap;
@@ -124,7 +220,7 @@ export default {
   }
 }
 .admin .characters {
-  width: calc(100% - 32px);
+  width: 100%;
   padding: 0 16px;
   display: flex;
   flex-wrap: wrap;
@@ -142,30 +238,29 @@ export default {
   }
 }
 .admin .btn {
+  min-width: 88px;
+  min-height: 36px;
+  padding: 0 16px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  overflow: hidden;
+  user-select: none;
+  cursor: pointer;
+  background: none;
+  border: 0;
+  border-radius: 2px;
+  color: $grey-900;
+  font-size: 14px;
+  font-weight: 500;
+  transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
   &:focus {
     outline: none;
   }
 
   &:hover {
     background-color: hsla(0, 0%, 60%, 0.2);
-
-    min-width: 88px;
-    min-height: 36px;
-    padding: 0 16px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    position: relative;
-    overflow: hidden;
-    user-select: none;
-    cursor: pointer;
-    background: none;
-    border: 0;
-    border-radius: 2px;
-    color: $grey-900;
-    font-size: 14px;
-    font-weight: 500;
-    transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
   }
 }
 .admin .btn-blue {
@@ -186,6 +281,14 @@ export default {
     border-bottom: 1px solid $grey-300;
     min-height: 48px;
     font-size: 14px;
+    input {
+      min-height: 32px;
+      color: rgba(0, 0, 0, 0.54);
+      border-color: rgba(0, 0, 0, 0.12);
+      border-width: 1px;
+      border-radius: 2px;
+      padding: 0 5px;
+    }
   }
 
   label {
@@ -319,9 +422,12 @@ export default {
   transition: all 275ms $fastOutLinearIn;
   border-radius: 4px 4px 0 0;
   z-index: 9;
-
+  &.active {
+    transform: translateY(0);
+    transition: all 275ms $linearOutSlowIn;
+  }
   .edit-header {
-    width: calc(100% - 32px);
+    width: 100%;
     height: 38px;
     padding: 0 16px;
     border-radius: 4px 4px 0 0;
@@ -336,7 +442,7 @@ export default {
   }
 
   .edit-body {
-    width: calc(100% - 32px);
+    width: 100%;
     max-height: calc(100vh - 200px);
     overflow: scroll;
     padding: 16px;
@@ -462,32 +568,67 @@ export default {
         }
       }
     }
+  }
+  .edit-footer {
+    padding: 16px;
+    display: flex;
 
-    .edit-footer {
-      padding: 16px;
-      display: flex;
-
-      .save {
-        background-color: $blue;
-        color: $white;
-        box-shadow: $shadow-1db;
-      }
-
-      .add-parameter {
-        width: 80px;
-        margin-left: 20px;
-        float: left;
-      }
+    .save {
+      background-color: $blue;
+      color: $white;
+      box-shadow: $shadow-1db;
     }
 
-    &.active {
-      transform: translateY(0);
-      transition: all 275ms $linearOutSlowIn;
+    .add-parameter {
+      width: 80px;
+      margin-left: 20px;
+      float: left;
     }
   }
 }
 .admin .table {
   width: 100%;
+  background-color: $white;
+  border: 0;
+  box-shadow: 0 -1px 0 rgba(0, 0, 0, 0.06), 0 0 3px rgba(0, 0, 0, 0.18), 0 1px 3px rgba(0, 0, 0, 0.18);
+  margin-top: 16px;
+  margin-bottom: 16px;
+  width: 100%;
+  thead {
+    &:first-child > tr:first-child td,
+    th {
+      border-top: 0;
+    }
+    td,
+    th {
+      color: $grey-400;
+      font-size: 14px;
+      vertical-align: bottom;
+      text-align: left;
+    }
+  }
+  tbody {
+    &:first-child > tr:first-child td,
+    th {
+      border-top: 0;
+    }
+    tr:hover {
+      background-color: $white;
+    }
+  }
+
+  td,
+  th {
+    border-top: 1px solid $grey-300;
+    font-size: 20px;
+    line-height: 30px;
+    padding: 6px 32px 6px 24px;
+    vertical-align: top;
+    &.nowrap {
+      white-space: nowrap;
+      width: 1%;
+    }
+  }
   td {
     font-size: 14px;
     max-width: 260px;

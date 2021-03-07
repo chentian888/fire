@@ -12,7 +12,7 @@ export default {
   },
 
   // Global CSS (https://go.nuxtjs.dev/config-css)
-  css: ['~/assets/scss/reset.scss', '~/assets/scss/global.scss'],
+  css: ['~/assets/scss/reset.scss', '~/assets/scss/global.scss', '~/assets/scss/icon.scss'],
 
   // Plugins to run before rendering page (https://go.nuxtjs.dev/config-plugins)
   plugins: [{ src: '~/plugins/vant.js' }],
