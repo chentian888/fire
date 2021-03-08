@@ -65,7 +65,7 @@ export default class ProductController {
     const { id = '', iamges = [], title = '', intro = '', price = '', parameters = [] } = ctx.request.body
     if (!id) {
       ctx.body = {
-        err: '_id is required',
+        err: 'id is required',
         success: true
       }
       return
@@ -100,10 +100,18 @@ export default class ProductController {
 
   @del('/products')
   async delPorduct(ctx, next) {
-    const { params } = ctx
-    const { _id } = params
-    if (!_id) return (ctx.body = { success: false, err: '_id is required' })
-    const data = await api.product.delProduct(_id)
+    const { query } = ctx
+    const { id } = query
+    if (!id) return (ctx.body = { success: false, err: 'id is required' })
+    const product = await api.product.getProduct(id)
+    if (!product) {
+      ctx.body = {
+        succes: false,
+        err: 'product not exist'
+      }
+      return
+    }
+    const data = await api.product.delProduct(product)
     ctx.body = {
       data,
       success: true

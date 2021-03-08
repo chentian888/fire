@@ -35,5 +35,10 @@ export default {
     const res = await Services.putProduct(data)
     dispatch('fetchProducts')
     return res
+  },
+  async removeProduct({ state, dispatch }, data = {}) {
+    const res = await Services.removeProduct(data)
+    dispatch('fetchProducts')
+    return res
   }
 }

@@ -26,7 +26,7 @@
             </td>
             <td>
               <button class="btn material-icon" @click="changeProduct(item)">edit</button>
-              <button class="btn material-icon" @click="removeProduct">delete</button>
+              <button class="btn material-icon" @click="remove(item)">delete</button>
             </td>
           </tr>
         </tbody>
@@ -128,7 +128,7 @@ export default {
     ...mapState(['products'])
   },
   methods: {
-    ...mapActions(['fetchProducts', 'saveProduct', 'putProduct']),
+    ...mapActions(['fetchProducts', 'saveProduct', 'putProduct', 'removeProduct']),
     // ...mapMutations(['updatePorducts']),
     save() {
       const { _id, title, price, intro, parameters } = this.form
@@ -148,7 +148,9 @@ export default {
       this.form = _.cloneDeep(row)
       this.toggleModal(true)
     },
-    removeProduct() {},
+    remove(row) {
+      this.removeProduct({ id: row._id })
+    },
     toggleModal(flag) {
       if (!flag) {
         this.form = { parameters: [{ key: '', value: '' }] }

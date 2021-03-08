@@ -23,6 +23,9 @@ class Service {
   putProduct(data = {}) {
     return axios.put(`${baseUrl}/api/products`, { ...data })
   }
+  removeProduct(params = {}) {
+    return axios.delete(`${baseUrl}/api/products`, { params })
+  }
 }
 
 export default new Service()
