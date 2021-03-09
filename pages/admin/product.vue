@@ -110,6 +110,7 @@ import { mapActions, mapState, mapMutations } from 'vuex'
 import _ from 'lodash'
 export default {
   layout: 'admin',
+  middleware: ['auth'],
   head() {
     return {
       title: '后台管理首页'
@@ -175,14 +176,6 @@ export default {
 @import '~/assets/scss/color';
 @import '~/assets/scss/mixin';
 
-.container {
-  width: 100vw;
-  height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
 .admin.content {
   flex: 1;
   height: calc(100vh - 56px);
@@ -192,61 +185,9 @@ export default {
 .admin hr {
   margin: 0.6 * $gutter 0;
 }
-.admin .card {
-  width: 440px !important;
-  height: 480px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  border: 1px solid$grey-300;
-  box-shadow: $shadow-1db;
-
-  .card-header {
-    width: 100%;
-    border-bottom: 1px solid$grey-300;
-
-    .card-inner {
-      margin: 12px 16px;
-      font-size: 20px;
-      line-height: 28px;
-    }
-  }
-
-  .card-body {
-    flex: 1;
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-    align-items: center;
-    padding-top: 3 * $gutter;
-
-    .login-icon {
-      margin-bottom: 2 * $gutter;
-    }
-
-    .form {
-      width: calc(100% - 4 * #{$gutter});
-
-      .login-btn {
-        background-color: $teal-300;
-        color: $white;
-      }
-    }
-  }
-}
 .admin .form {
   display: flex;
   flex-direction: column;
-}
-
-.admin .form-control {
-  width: calc(100% - 2 * #{$gutter});
-  height: 36px;
-  padding: 0 $gutter;
-  line-height: 36px;
-  font-size: $supplement;
-  margin-bottom: 0.6 * $gutter;
 }
 
 .admin .houses {

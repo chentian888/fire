@@ -15,5 +15,6 @@ export const addSession = app => {
     rolling: false
   }
   console.log('setting session middleware')
+  app.keys = ['fire'];
   app.use(session(CONFIG, app))
 }

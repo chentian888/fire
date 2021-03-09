@@ -26,6 +26,9 @@ class Service {
   removeProduct(params = {}) {
     return axios.delete(`${baseUrl}/api/products`, { params })
   }
+  login(data = {}) {
+    return axios.post(`${baseUrl}/admin/login`, { ...data })
+  }
 }
 
 export default new Service()

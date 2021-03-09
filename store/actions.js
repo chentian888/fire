@@ -40,5 +40,10 @@ export default {
     const res = await Services.removeProduct(data)
     dispatch('fetchProducts')
     return res
+  },
+  async adminLogin({ state, commit }, data = {}) {
+    const res = await Services.login(data)
+    commit('SET_USER', res.data.data)
+    return res
   }
 }
