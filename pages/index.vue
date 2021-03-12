@@ -13,7 +13,12 @@
     <div class="character">
       <div class="title">主要人物</div>
       <div class="section">
-        <div class="items" v-for="(item, index) in characters" :key="index" @click="$router.push({ name: 'character', query: { id: item._id } })">
+        <div
+          class="items"
+          v-for="(item, index) in characters"
+          :key="index"
+          @click="$router.push({ name: 'character', query: { id: item._id } })"
+        >
           <img class="thumb" src="" />
           <div class="desc">
             <div class="name">{{ item.name }}</div>
@@ -40,6 +45,7 @@
 <script>
 import { mapState, mapActions } from 'vuex'
 export default {
+  middleware: ['wechat-auth'],
   data() {
     return {
       list: [1, 2, 3, 4],

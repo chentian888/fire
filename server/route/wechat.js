@@ -4,6 +4,7 @@ import reply from '../wechat/reply'
 import weChatMiddleWare from '../wechat-lib/middleware'
 import config from '../config'
 import { getWeChatClient } from '../wechat'
+import { redirect, oauth } from '../controller/wechat'
 @controller('')
 export default class WeChat {
   @get('/wechat-hear')
@@ -57,5 +58,15 @@ export default class WeChat {
     // const res = await client.handle('remarkUser', 'ojYkj6in1O6JxQMZ4UWUQ39gHwU4', '我就是公众号拥有者')
 
     ctx.body = res
+  }
+
+  @get('/wechat-redirect')
+  async wechatRedirect(ctx, next) {
+    await redirect(ctx, next)
+  }
+
+  @get('/wechat-oauth')
+  async wechatOauth(ctx, next) {
+    await oauth(ctx, next)
   }
 }

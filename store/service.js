@@ -29,6 +29,9 @@ class Service {
   login(data = {}) {
     return axios.post(`${baseUrl}/admin/login`, { ...data })
   }
+  getWechatOAuth(url) {
+    return axios.get(`${baseUrl}/wechat-oauth?url=${encodeURIComponent(url)}`)
+  }
 }
 
 export default new Service()

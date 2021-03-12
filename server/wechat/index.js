@@ -1,4 +1,5 @@
 import weChatLib from '../wechat-lib'
+import weChatOauth from '../wechat-lib/oauth'
 import config from '../config'
 import Token from '../schema/token'
 import Ticket from '../schema/ticket'
@@ -17,4 +18,9 @@ const wechatConfig = {
 export const getWeChatClient = () => {
   const wechatClient = new weChatLib(wechatConfig.wechat)
   return wechatClient
+}
+
+export const getOAuth = () => {
+  const wechatOAuth = new weChatOauth(wechatConfig.wechat)
+  return wechatOAuth
 }
