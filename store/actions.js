@@ -9,7 +9,6 @@ export default {
   // 家族详情
   async fetchHouse({ state }, { id }) {
     const res = await Services.fetchHouse(id)
-    console.log(res)
     state.house = res.data.data
     return res
   },
@@ -67,8 +66,8 @@ export default {
     }
   },
   // 授权获取用户信息
-  async getWechatOAuth({ commit }, url) {
-    const { data = {} } = await Services.getWechatOAuth(url)
-    commit('SET_AUTHUSER', data)
+  async getWechatOAuth({ commit }, { code, state }) {
+    const { data = {} } = await Services.getWechatOAuth(code, state)
+    commit('SET_AUTHUSER', data.data)
   }
 }

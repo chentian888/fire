@@ -6,9 +6,14 @@ export async function redirect(ctx, next) {
   const { visit = '', id = '' } = ctx.query
   const params = id ? `${visit}_${id}` : visit
   const url = api.wechat.getAuthorizeURL(scope, target, params)
-  console.log(url)
   ctx.redirect(url)
 }
 export async function oauth(ctx, next) {
-  console.log(ctx.query)
+  const { code, state } = ctx.query
+  const user = await api.wechat.getUserByCode(code)
+  ctx.session.user = user
+  ctx.body = {
+    success: true,
+    data: user
+  }
 }
