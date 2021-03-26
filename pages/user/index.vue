@@ -15,7 +15,7 @@
         <div class="shop-car">
           <div class="car-title">我的订单</div>
           <div class="goods-list">
-            <GoodsItem v-for="(item, index) in list" :key="index"></GoodsItem>
+            <!-- <GoodsItem v-for="(item, index) in list" :key="index"></GoodsItem> -->
           </div>
         </div>
       </div>

@@ -13,7 +13,8 @@ const createStore = () => {
       cities: [],
       products: [],
       user: null,
-      authUser: null
+      authUser: null,
+      focusProduct: {}
     },
     getters,
     actions,

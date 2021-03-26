@@ -17,6 +17,9 @@ class Service {
   fetchProducts() {
     return axios.get(`${baseUrl}/api/products`)
   }
+  focusProduct(id) {
+    return axios.get(`${baseUrl}/api/products/${id}`)
+  }
   saveProduct(data = {}) {
     return axios.post(`${baseUrl}/api/products`, { ...data })
   }

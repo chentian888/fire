@@ -30,6 +30,11 @@ export default {
     state.products = res.data.data
     return res
   },
+  // 商品详情
+  async fetchFocusProduct({ state }, id) {
+    const res = await Services.focusProduct(id)
+    state.focusProduct = res.data.data
+  },
   // 保存商品
   async saveProduct({ state, dispatch }, data = {}) {
     const res = await Services.saveProduct(data)

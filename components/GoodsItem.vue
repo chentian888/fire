@@ -1,15 +1,30 @@
 <template>
-  <div class="goods-item">
+  <div class="goods-item" @click="goDetail">
     <div class="goods-thumb"></div>
     <div class="goods-desc">
       <div class="goods-top">
-        <div class="title">商品标题</div>
-        <div class="price">12.3434</div>
+        <div class="title">{{ content.title }}</div>
+        <div class="price">¥{{ content.price }}</div>
       </div>
-      <div class="content">商品内容商品内容商品内容商品内容商品内容商品内容商品内容商品内容商品内容商品内容商品内容</div>
+      <div class="content">{{ content.intro }}</div>
     </div>
   </div>
 </template>
+<script>
+export default {
+  props: {
+    content: { type: Object, default: () => {} }
+  },
+  data() {
+    return {}
+  },
+  methods: {
+    goDetail() {
+      this.$router.push({ name: 'deal', query: { id: this.content._id } })
+    }
+  }
+}
+</script>
 
 <style lang="scss">
 .goods-item {

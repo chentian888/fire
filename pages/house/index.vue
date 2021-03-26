@@ -35,7 +35,7 @@
 <script>
 import { mapActions, mapState } from 'vuex'
 export default {
-  middleware: ['wechat-auth'],
+  // middleware: ['wechat-auth'],
   computed: {
     ...mapState(['house'])
   },

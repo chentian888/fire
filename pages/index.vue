@@ -45,7 +45,7 @@
 <script>
 import { mapState, mapActions } from 'vuex'
 export default {
-  middleware: ['wechat-auth'],
+  // middleware: ['wechat-auth'],
   data() {
     return {
       list: [1, 2, 3, 4],
