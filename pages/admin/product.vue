@@ -172,9 +172,9 @@ export default {
 </script>
 
 <style lang="scss">
-@import '~/assets/scss/var';
-@import '~/assets/scss/color';
-@import '~/assets/scss/mixin';
+@import '~/assets/scss/var.scss';
+@import '~/assets/scss/color.scss';
+@import '~/assets/scss/mixin.scss';
 
 .admin.content {
   flex: 1;

@@ -1,0 +1,233 @@
+@import './mixin';
+.container {
+  overflow: hidden !important;
+  padding-bottom: 0 !important;
+  -webkit-overflow-scrolling: auto;
+
+  .focus-goods-body {
+    height: calc(100% - 1.5rem);
+    overflow-x: hidden;
+    overflow-y: scroll;
+    -webkit-overflow-scrolling: touch;
+
+    .focus-goods-swiper {
+      width: 100%;
+      position: relative;
+      width: 320px;
+      height: 240px;
+      background: #eee;
+      img {
+        width: 100%;
+      }
+    }
+
+    .focus-goods-content {
+      width: 100%;
+      padding: 10px;
+      color: #616161;
+      // @include font-dpr(10px);
+      @include border-box();
+      .goods-bar {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 10px;
+        margin: -10px -10px 0 -10px;
+        background: linear-gradient(to right,#ff6034,#ee0a24);
+        color: #fff;
+      }
+      .focus-goods-price {
+        &:before {
+          content: '¥';
+          font-size: 20px;
+          padding-top: 1px;
+          display: inline-block;
+          vertical-align: top;
+        }
+
+        .focus-goods-price_main {
+          font-size: 20px;
+          margin: 0 3px;
+        }
+
+        .focus-goods-price_others {
+          font-size: 1.3em;
+          vertical-align: text-bottom;
+        }
+      }
+      .focus-goods-name {
+        font-size: 20px;
+      }
+
+      .focus-goods-intro {
+        font-size: 16px;
+        line-height: 35px;
+        margin: 10px 0;
+      }
+
+      .focus-goods-info {
+        background: #bde6e2;
+        padding: 10px;
+
+        > * {
+          padding: 10px/2 0;
+          color: #616161;
+          transform: scale(0.85);
+        }
+
+        > *:not(:last-child) {
+          border-bottom: 1px solid #fff;
+        }
+      }
+
+      .focus-goods-attentions {
+        margin: 10px 0;
+        .title {
+          font-size: 16px;
+          font-weight: bold;
+        }
+
+        ol {
+          padding: 0;
+          font-size: 16px;
+          list-style-type: decimal;
+          li {
+            list-style-position: inside;
+            margin: 10px 0;
+          }
+        }
+      }
+    }
+  }
+  .focus-goods-footer {
+    height: 1.5rem;
+    @include border-box();
+    border-top: 1px solid #e0e0e0;
+    text-align: center;
+    line-height: 1.5rem;
+    // position: absolute
+    // bottom: 0
+    // left: 0
+
+    span {
+      // @include font-dpr(16px);
+      padding: 1.5rem/10 12%;
+      color: #fff;
+      background: #757575;
+      border-radius: 3px;
+    }
+  }
+  .focus-goods-pay {
+    height: calc(100% - 7rem);
+    background: #f5f5f5;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    z-index: 10;
+    // @include font-dpr(10px);
+
+    > * {
+      @include border-box();
+      width: 100%;
+      margin: auto;
+    }
+
+    .focus-goods-pay_header {
+      height: 12%;
+      padding: 0.5em 1em;
+      font-size: 1.6em;
+      line-height: 230%;
+      border-top: 1px solid #757575;
+      border-bottom: 1px solid #757575;
+
+      > span:last-child {
+        color: #2196f3;
+        float: right;
+      }
+    }
+
+    .focus-goods-pay_body {
+      height: 68%;
+
+      .focus-goods-pay_item {
+        width: 80%;
+        height: 25%;
+        margin: auto;
+        @include border-box();
+        border-bottom: 1px solid #757575;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-size: 0;
+
+        > * {
+          display: inline-block;
+          vertical-align: middle;
+          // @include font-dpr(15px);
+        }
+
+        > *:first-child {
+          width: 25%;
+          max-height: 90%;
+          color: #9e9e9e;
+          text-align: right;
+        }
+
+        > *:last-child {
+          width: 75%;
+          padding-left: 5%;
+          background: transparent;
+          outline: none;
+          border: none;
+          color: #000;
+
+          > p:last-child {
+            margin-top: 0.3em;
+            color: #9e9e9e;
+          }
+        }
+      }
+    }
+
+    .focus-goods-pay_footer {
+      height: 20%;
+      color: #424242;
+      font-size: 2em;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+  }
+  .modal {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    padding: 0.8em 1.5em;
+    text-align: center;
+    z-index: 999;
+    background: rgba(0, 0, 0, 0.8);
+    color: #fff;
+    // @include font-dpr(16px);
+  }
+}
+.slide-top-enter-active,
+.slide-top-leave-active {
+  transition: transform 0.3s linear;
+}
+
+.slide-top-enter,
+.slide-top-leave-to {
+  bottom: calc(7rem - 100%);
+  transform: translateY(100%);
+}
+
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.35s linear;
+}
+
+.fade-enter,
+.fade-leave-to {
+  opacity: 0;
+}
