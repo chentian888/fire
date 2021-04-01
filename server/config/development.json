@@ -1,5 +1,5 @@
 {
-  "db": "mongodb://localhost:27017/ice",
+  "db": "mongodb://81.69.247.189:27017/ice",
   "SITE_ROOT_URL": "http://node.vipgz4.idcfengye.com",
   "weChat": {
     "appId": "wxf76306537aa0e9f1",
