@@ -29,6 +29,8 @@
     "request-promise": "^4.2.6",
     "sha1": "^1.1.1",
     "vant": "^2.12.6",
+    "wechat-pay": "^0.3.2",
+    "weixin-js-sdk": "^1.6.0",
     "xml2js": "^0.4.23",
     "xss": "^1.0.8"
   },

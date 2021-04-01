@@ -1,6 +1,17 @@
 {
-  "db": "mongodb://81.69.247.189:27017/ice",
+  "db": "mongodb://localhost:27017/ice",
+  "SITE_ROOT_URL": "http://node.vipgz4.idcfengye.com",
   "weChat": {
+    "appId": "wxf76306537aa0e9f1",
+    "appSecret": "4e6860bee39114b8affb09a28980c161",
+    "token": "imoocisareallyamzingplacetolearn"
+  },
+  "mina": {
+    "appId": "wxf76306537aa0e9f1",
+    "appSecret": "4e6860bee39114b8affb09a28980c161",
+    "token": "imoocisareallyamzingplacetolearn"
+  },
+  "shop": {
     "appId": "wxf76306537aa0e9f1",
     "appSecret": "4e6860bee39114b8affb09a28980c161",
     "token": "imoocisareallyamzingplacetolearn"

@@ -35,6 +35,10 @@ class Service {
   getWechatOAuth(code, state) {
     return axios.get(`${baseUrl}/wechat-oauth`, { params: { code, state } })
   }
+  // 创建订单
+  createOrder({ productId, name, address, phoneNumber }) {
+    return axios.post(`${baseUrl}/api/createOrder`, { productId, name, address, phoneNumber })
+  }
 }
 
 export default new Service()

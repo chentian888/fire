@@ -74,5 +74,9 @@ export default {
   async getWechatOAuth({ commit }, { code, state }) {
     const { data = {} } = await Services.getWechatOAuth(code, state)
     commit('SET_AUTHUSER', data.data)
+  },
+  // 创建订单
+  async createOrder({ commit }, { productId, name, address, phoneNumber }) {
+    const { data = {} } = await Services.createOrder(productId, name, address, phoneNumber)
   }
 }
