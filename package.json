@@ -4,6 +4,7 @@
   "private": true,
   "scripts": {
     "server": "cross-env NODE_ENV=development nodemon ./start.js",
+    "ngrok": "./server/bin/ngrok",
     "dev": "nuxt",
     "build": "nuxt build",
     "start": "nuxt start",
