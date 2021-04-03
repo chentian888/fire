@@ -120,7 +120,7 @@ export default class ProductController {
   }
 
   @post('/createOrder')
-  @validate({ body: ['productId', 'name', 'phoneNumber', 'adress'] })
+  @validate({ body: ['productId', 'name', 'phoneNumber', 'address'] })
   async createOrder(ctx, next) {
     const ip = ctx.ip.replace('::ffff:', '')
     const { productId, name, phoneNumber, adress } = ctx.request.body
@@ -165,7 +165,17 @@ export default class ProductController {
         spbill_create_ip: ip,
         trade_type: 'JSAPI'
       }
-      const order = await weChatPay.getParamsAsync(_order)
+      // const payClient = await weChatPay()
+      // const order = await payClient.getParamsAsync(_order)
+      // 模拟真实支付返回参数
+      const order = {
+        appId: '',
+        nonceStr: '',
+        signType: 'MD5',
+        package: '',
+        paySign: '',
+        timestamp: ''
+      }
       const payment = await api.payment.createOrder({
         user: user._id,
         product: product._id,

@@ -76,7 +76,13 @@ export default {
     commit('SET_AUTHUSER', data.data)
   },
   // 创建订单
-  async createOrder({ commit }, { productId, name, address, phoneNumber }) {
-    const { data = {} } = await Services.createOrder(productId, name, address, phoneNumber)
+  async createOrder({ commit }, payload) {
+    const { data = {} } = await Services.createOrder(payload)
+    return data
+  },
+  // 获取ticket
+  async getWechatSignature({ commit }, url) {
+    const res = await Services.getWechatSignature(url)
+    return res
   }
 }

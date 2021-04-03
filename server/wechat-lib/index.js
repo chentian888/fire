@@ -2,6 +2,7 @@ import fs from 'fs'
 import request from 'request-promise'
 // import FormData from 'form-data'
 import _ from 'lodash'
+import { sign } from './util'
 const weChatBaseUrl = 'https://api.weixin.qq.com/cgi-bin'
 
 const weChatApi = {
@@ -42,6 +43,9 @@ const weChatApi = {
     blackList: '/tags/members/getblacklist',
     batchBlack: '/tags/members/batchblacklist',
     batchUnBlack: '/tags/members/batchunblacklist'
+  },
+  ticket: {
+    get: 'ticket/getticket'
   }
 }
 
@@ -52,6 +56,8 @@ export default class WeChatLib {
     this.token = config.token
     this.getAccessToken = config.getAccessToken
     this.saveAccessToken = config.saveAccessToken
+    this.getTicket = config.getTicket
+    this.saveTicket = config.saveTicket
     this.fetchAccessToken()
   }
   async handle(operation, ...args) {
@@ -82,6 +88,25 @@ export default class WeChatLib {
     res.expires_in = expiresIn
     console.log('获取新token', res)
     return res
+  }
+  async fetchTicket() {
+    let ticket = this.getTicket()
+    if (!this.isValidToken(ticket, 'expires_in')) {
+      ticket = await this.updateTicket()
+      this.saveTicket(ticket)
+    }
+    return ticket
+  }
+  async updateTicket(accessToken) {
+    const url = api.ticket + `access_token=${accessToken}&type=jsapi`
+    let res = await request({ method: 'GET', url })
+    const now = Date.now()
+    const expiresIn = now + (res.expires_in - 20) * 1000
+    res.expires_in = expiresIn
+    return res
+  }
+  async sign(ticket, url) {
+    return sign(ticket, url)
   }
   isValidToken(data, name) {
     if (!data || !data[name] || !data.expires_in) {

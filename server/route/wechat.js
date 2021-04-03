@@ -4,7 +4,7 @@ import reply from '../wechat/reply'
 import weChatMiddleWare from '../wechat-lib/middleware'
 import config from '../config'
 import { getWeChatClient } from '../wechat'
-import { redirect, oauth } from '../controller/wechat'
+import { redirect, oauth, signature } from '../controller/wechat'
 @controller('')
 export default class WeChat {
   @get('/wechat-hear')
@@ -68,5 +68,10 @@ export default class WeChat {
   @get('/wechat-oauth')
   async wechatOauth(ctx, next) {
     await oauth(ctx, next)
+  }
+
+  @get('/wechat-signature')
+  async wechatSignature(ctx, next) {
+    await signature(ctx, next)
   }
 }

@@ -1,14 +1,15 @@
+import { resolve } from 'path'
+import fs from 'fs'
 import wechatPay from 'wechat-pay'
-import path, { resolve } from 'path'
-const cert = path.resolve(__dirname, '../', 'config/cert/apiclient_cert.p12')
+const cert = resolve(__dirname, '../', 'config/cert/apiclient_cert.p12')
 
 export default class Pay {
   constructor(config) {
     const intiConfig = {}
-    this.appId = config.shop.appId
-    this.partnerKey = config.shop.key
-    this.notifyUrl = config.shop.notifyUrl
-    this.pfx = fs.readFileSync(cert)
+    this.appId = config.appId
+    this.partnerKey = config.key
+    this.notifyUrl = config.notifyUrl
+    this.pfx = fs.readFileSync(cert) || ''
     this.payment = new wechatPay.Payment(intiConfig)
   }
 

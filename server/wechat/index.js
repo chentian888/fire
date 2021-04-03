@@ -27,6 +27,6 @@ export const getOAuth = () => {
 }
 
 export const weChatPay = () => {
-  const weChatPay = new pay(wechatConfig.shop)
+  const weChatPay = new pay(config.shop)
   return weChatPay
 }

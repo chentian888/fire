@@ -74,7 +74,7 @@
 import { mapActions, mapState } from 'vuex'
 import Cell from '~/components/Cell'
 export default {
-  // middleware: ['wechat-auth'],
+  middleware: ['wechat-auth'],
   layout: 'noNav',
   components: { Cell },
   computed: {

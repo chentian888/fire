@@ -1,5 +1,6 @@
 import xml2js from 'xml2js'
 import _ from 'lodash'
+import sha1 from 'sha1'
 import compileTpl from './msgTemplate'
 export function parseXML(xml) {
   return new Promise((resolve, reject) => {
@@ -56,4 +57,28 @@ export function tpl(content, msg) {
     }
   )
   return compileTpl(info)
+}
+function createNonce() {
+  return Math.random()
+    .toString(36)
+    .slice(2, 15)
+}
+function createTimestamp() {
+  return Date.now() + ''
+}
+export function sign(ticket, url) {
+  const signData = {
+    noncestr: createNonce(),
+    jsapi_ticket: ticket,
+    timestamp: createTimestamp(),
+    url: url
+  }
+  const signKeys = Object.keys(signData)
+  const signStr = signKeys
+    .sort()
+    .map(ele => `${ele}=${signData[ele]}`)
+    .join('&')
+
+  signData.sign = sha1(signStr)
+  return signData
 }

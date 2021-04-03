@@ -1,5 +1,7 @@
-import { getOAuth } from '../wechat'
+import { getOAuth, getWeChatClient } from '../wechat'
 import User from '../schema/user'
+
+const wechatApi = getWeChatClient()
 
 export function getAuthorizeURL(...args) {
   const oauth = getOAuth()
@@ -24,4 +26,12 @@ export async function getUserByCode(code) {
     await newUser.save()
   }
   return userInfo
+}
+
+export async function getSignatureAsync(url) {
+  const { access_token = '' } = wechatApi.fetchAccessToken()
+  const { ticket = '' } = wechatApi.fetchTicket(access_token)
+  const params = wechatApi.sign(ticket, url)
+  params.appId = wechatApi.appId
+  return params
 }

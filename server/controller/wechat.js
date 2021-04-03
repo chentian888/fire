@@ -17,3 +17,14 @@ export async function oauth(ctx, next) {
     data: user
   }
 }
+
+export async function signature(ctx, next) {
+  let url = ctx.query
+  if (!url) ctx.throw(404)
+  url = decodeURIComponent(url)
+  const params = await api.wechat.getSignatureAsync(url)
+  ctx.body = {
+    success: true,
+    params: params
+  }
+}
