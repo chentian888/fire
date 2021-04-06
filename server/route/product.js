@@ -198,4 +198,13 @@ export default class ProductController {
       ctx.throw(501, e)
     }
   }
+
+  @get('/payment')
+  async getPayment(ctx, next) {
+    const data = await api.payment.paymentList()
+    ctx.body = {
+      success: true,
+      data
+    }
+  }
 }

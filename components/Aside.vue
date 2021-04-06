@@ -4,6 +4,9 @@
       <li>
         <nuxt-link to="/admin/product">宝贝列表</nuxt-link>
       </li>
+      <li>
+        <nuxt-link to="/admin/payment">订单列表</nuxt-link>
+      </li>
     </ul>
   </div>
 </template>

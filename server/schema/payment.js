@@ -5,7 +5,7 @@ const Mixed = Schema.Types.Mixed
 
 const PaymentSchema = new Schema({
   user: { type: ObjectId, ref: 'User' },
-  product: { type: ObjectId, ref: 'Product' },
+  product: { type: ObjectId, ref: 'Porduct' },
   success: { type: Number, default: 0 },
   payType: { type: String, default: '0' },
   name: String,

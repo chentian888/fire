@@ -29,15 +29,22 @@ class Service {
   removeProduct(params = {}) {
     return axios.delete(`${baseUrl}/api/products`, { params })
   }
+  
+  // 创建订单
+  createOrder(data) {
+    return axios.post(`${baseUrl}/api/createOrder`, { ...data })
+  }
+
+  // 订单列表
+  fetchPayment() {
+    return axios.get(`${baseUrl}/api/payment`)
+  }
+
   login(data = {}) {
     return axios.post(`${baseUrl}/admin/login`, { ...data })
   }
   getWechatOAuth(code, state) {
     return axios.get(`${baseUrl}/wechat-oauth`, { params: { code, state } })
-  }
-  // 创建订单
-  createOrder(data) {
-    return axios.post(`${baseUrl}/api/createOrder`, { ...data })
   }
   getWechatSignature(url) {
     return axios.get(`${baseUrl}/wechat-signature?url=${url}`)
