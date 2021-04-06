@@ -123,7 +123,7 @@ export default class ProductController {
   @validate({ body: ['productId', 'name', 'phoneNumber', 'address'] })
   async createOrder(ctx, next) {
     const ip = ctx.ip.replace('::ffff:', '')
-    const { productId, name, phoneNumber, adress } = ctx.request.body
+    const { productId, name, phoneNumber, address } = ctx.request.body
     const session = ctx.session
     if (!productId) {
       ctx.body = {
