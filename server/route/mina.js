@@ -15,7 +15,7 @@ export default class MinaController {
   @get('/user')
   @validate({ query: ['code', 'userInfo'] })
   async getUser(ctx, next) {
-    // TODO
+    // TODO 待完善
     await getUserAsync(ctx, next)
   }
 
