@@ -12,10 +12,12 @@
     "pm2setup": "pm2 deploy production setup"
   },
   "dependencies": {
+    "apollo-server-koa": "^2.23.0",
     "axios": "^0.21.1",
     "bcrypt": "^5.0.1",
     "core-js": "2",
     "glob": "^7.1.6",
+    "graphql": "^15.5.0",
     "koa": "^2.13.1",
     "koa-bodyparser": "^4.3.0",
     "koa-router": "^10.0.0",
